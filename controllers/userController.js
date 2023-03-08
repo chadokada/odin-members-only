@@ -1,4 +1,4 @@
-const express = require("express");
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const errorMsg = require('../utilities/errorMessages');
@@ -8,7 +8,7 @@ const User = require('../models/user');
 exports.user_sign_up_get = (req, res) => {
   res.render('sign-up-form', {
     title: 'Sign Up'
-  })
+  });
 };
 
 // Handle Sign Up form on POST.
@@ -73,12 +73,66 @@ exports.user_sign_up_post = [
 
 // Display user enrollment form on GET
 exports.user_member_enroll_get = (req, res, next) => {
-  res.send("NOT IMPLEMENTED: User enrollment GET")
-}
+  if(!res.locals.currentUser) {
+    res.redirect('/log-in');
+  }
+  if(res.locals.currentUser.membership_status){
+    res.redirect('/settings');
+  }
+  res.render('become-a-member')
+};
 
 // Display user enrollment form on POST
-exports.user_member_enroll_post = (req, res, next) => {
-  res.send("NOT IMPLEMENTED: User enrollment POST")
-}
+exports.user_member_enroll_post = [
+  body('membership_code', 'Membership code is blank')
+    .trim()
+    .isLength( {min: 1} )
+    .custom((value, { req }) => value === process.env.MEMBERSHIP_CODE)
+    .withMessage('Incorrect membership code.')
+    .escape(),
 
+  (req, res, next) => {
+    const errors = validationResult(req);
+    const currentUser = res.locals.currentUser;
 
+    if(!errors.isEmpty()) {
+      res.render('become-a-member', {
+        errors:errors.array()
+      });
+      return;
+    };
+
+    const user = new User({
+      first_name: currentUser.first_name,
+      last_name: currentUser.last_name,
+      username: currentUser.username,
+      password: currentUser.password,
+      membership_status: true,
+      admin: currentUser.admin,
+      _id: currentUser._id
+    });
+
+    User.findByIdAndUpdate(currentUser._id, user, {}, (err, theuser) => {
+      if(err) {
+        return next(err);
+      };
+      res.redirect('/settings');
+    });
+  },
+]
+
+exports.user_profile_page = (req, res, next) => {
+  // need to look up user in DB
+  res.render('user-profile', {
+    user: req.params.username
+  });
+};
+
+// Display user setting page on GET
+exports.user_setting_page = (req, res, next) => {
+  if(!res.locals.currentUser) {
+    res.redirect('/log-in');
+    next();
+  };
+  res.render('user-settings');
+};

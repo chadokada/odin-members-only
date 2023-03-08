@@ -16,12 +16,44 @@ a {
 
 .header-row{
   display: flex;
-  gap: 5px;
+  gap: 0.5em;
   width: 100%;
   justify-content: end;
+  align-items: center;
 }
 
 .form-button-row{
   display: flex;
   gap: 5px;
+}
+
+.user-settings{
+  width: 15px;
+}
+
+.setting-field-container{
+  display: flex;
+  flex-flow: column;
+  gap: 1.25em;
+}
+
+.setting-field{
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.not-member{
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.btn-membership{
+  color: #fff;
+  font-size: 0.95em;
+  background-color: #007bff;
+  border: 1px solid transparent;
+  border-color: #007bff;
+  border-radius: 0.25rem;
 }

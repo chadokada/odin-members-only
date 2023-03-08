@@ -3,3 +3,6 @@ extends layout
 block content
 
   h1= title
+
+  if currentUser 
+    h4 #[strong Welcome Back:] #{currentUser.username}

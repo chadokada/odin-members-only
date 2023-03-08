@@ -1,0 +1,23 @@
+extends layout 
+
+block content
+
+  h2= currentUser.username + ' Settings'
+
+  hr
+
+  div.setting-field-container
+    div.setting-field #[strong First Name:] #{currentUser.first_name}
+    div.setting-field #[strong Last Name:] #{currentUser.last_name}
+    div.setting-field #[strong Membership Status:] 
+      if currentUser.membership_status
+        div Member 
+      else 
+        div.not-member Not a Member 
+          a(href='/become-a-member')
+            button.btn-membership Become a Member!
+    div.setting-field #[strong Admin:] 
+      if currentUser.admin
+        div Yes 
+      else 
+        div No 

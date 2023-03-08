@@ -1,0 +1,21 @@
+extends layout 
+
+block content
+
+  h2 Become a Member!
+
+
+  form(method='POST' action='')
+
+    div.form-group 
+      label(for='membership_code') Membership Code: 
+      input#membership_code.form-control(type='text', placeholder='Membership Code', name='membership_code' )
+
+    div.form-button-row
+      button.btn.btn-primary(type='submit') Submit
+      a.btn.btn-primary(href='/settings') Cancel
+  
+  if errors 
+    ul 
+      for error in errors 
+        li #{error.msg}

@@ -28,6 +28,13 @@ router.get('/become-a-member', user_controller.user_member_enroll_get);
 // POST user enrollment
 router.post('/become-a-member', user_controller.user_member_enroll_post);
 
+// GET user profile page
+router.get('/user/:username', user_controller.user_profile_page);
+
+// GET user settings page
+router.get('/settings', user_controller.user_setting_page);
+
+
 //
 // AUTHENTICATION ROUTES //
 //
@@ -38,6 +45,10 @@ router.get('/log-in', auth_controller.log_in_get);
 // POST user Log in
 router.post('/log-in', auth_controller.log_in_post);
 
+router.get('/log-out', auth_controller.log_out);
+
+
+router.get('/log-in-failed', auth_controller.log_in_failed)
 
 //
 // MESSAGE ROUTES //
