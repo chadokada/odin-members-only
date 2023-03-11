@@ -1,0 +1,26 @@
+extends layout 
+
+block content
+
+  div.title-row
+    h1= title 
+
+  form.message-form(method='POST' action='')
+
+    div.form-group 
+      label(for='message_title') Title: 
+      input#message_title.form-control(
+        type='text', placeholder='Message Title', name='message_title', required='true',
+        value=(message_title==undefined? '' : message_title)
+      )
+
+    div.form-group 
+      label(for='message_body') Message: 
+      textarea#message_body.form-control(
+        type='textarea', placeholder='Message', name='message_body', required='true',
+        value=(last_name==undefined? '' : last_name)
+      )
+
+    div.form-button-row
+      button.btn.btn-primary(type='submit') Submit
+      a.btn.btn-primary(href='/') Cancel

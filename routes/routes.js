@@ -5,6 +5,7 @@ const router = express.Router();
 const index_controller = require('../controllers/indexController');
 const user_controller = require('../controllers/userController');
 const auth_controller = require('../controllers/authenticationController');
+const message_controller = require('../controllers/messageController');
 
 //
 // INDEX ROUTES //
@@ -47,12 +48,14 @@ router.post('/log-in', auth_controller.log_in_post);
 
 router.get('/log-out', auth_controller.log_out);
 
-
-router.get('/log-in-failed', auth_controller.log_in_failed)
+router.get('/log-in-failed', auth_controller.log_in_failed);
 
 //
 // MESSAGE ROUTES //
 //
 
+router.get('/add-message', message_controller.add_message_get);
+
+router.post('/add-message', message_controller.add_message_post);
 
 module.exports = router;

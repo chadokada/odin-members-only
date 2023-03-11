@@ -7,6 +7,15 @@ a {
   color: #00B7FF;
 }
 
+.container-fluid{
+  padding-left: 10vw;
+  padding-right: 10vw;
+}
+
+.container-body{
+  width: 100%;
+}
+
 .input-error-msg{
   color: red;
   font-size: 10px;
@@ -56,4 +65,66 @@ a {
   border: 1px solid transparent;
   border-color: #007bff;
   border-radius: 0.25rem;
+}
+
+.title-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-message{
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  height: 2.5em;
+}
+
+.btn-add-message{
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.25em 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.messages-container{
+  display: flex;
+  flex-flow: column;
+  gap: 1em;
+  width: 100%;
+}
+
+.message-container{
+  display: flex;
+  flex-flow: column;
+  gap: 0.5em;
+  padding: 0.5em;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 10px;
+}
+
+.message-title{
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.message-info{
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  color: rgb(100 100 100)
+}
+
+.message-form{
+  width: 100%;
 }
