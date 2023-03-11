@@ -9,7 +9,7 @@ exports.home = (req, res, next) => {
         return next(err);
       }
       res.render("home", {
-        title: "Members Only",
+        title: "Messages",
         messages: messages
       })
     })

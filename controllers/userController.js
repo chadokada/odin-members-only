@@ -119,7 +119,7 @@ exports.user_member_enroll_post = [
       res.redirect('/settings');
     });
   },
-]
+];
 
 exports.user_profile_page = (req, res, next) => {
   // need to look up user in DB
@@ -136,3 +136,55 @@ exports.user_setting_page = (req, res, next) => {
   };
   res.render('user-settings');
 };
+
+// Display moderator verification page on GET
+exports.moderator_verification_get = (req, res, next) => {
+  // User needs to log in first
+  if(!res.locals.currentUser) {
+    res.redirect('/log-in');
+  }
+  // User needs to be a member in order to be a moderator
+  if(!res.locals.currentUser.membership_status){
+    res.redirect('/become-a-member');
+  }
+  res.render('moderator-verification-form')
+};
+
+// Display moderator verification page on POST
+exports.moderator_verification_post = [
+  body('moderator_code', 'Moderator code is blank')
+    .trim()
+    .isLength( {min: 1} )
+    .custom((value, { req }) => value === process.env.MODERATOR_CODE)
+    .withMessage('Incorrect moderator code.')
+    .escape(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+    const currentUser = res.locals.currentUser;
+
+    if(!errors.isEmpty()) {
+      res.render('mod-verification', {
+        errors:errors.array()
+      });
+      return;
+    };
+
+    const user = new User({
+      first_name: currentUser.first_name,
+      last_name: currentUser.last_name,
+      username: currentUser.username,
+      password: currentUser.password,
+      membership_status: currentUser.membership_status,
+      moderator: true,
+      _id: currentUser._id
+    });
+
+    User.findByIdAndUpdate(currentUser._id, user, {}, (err, theuser) => {
+      if(err) {
+        return next(err);
+      };
+      res.redirect('/settings');
+    });
+  },  
+];

@@ -65,6 +65,4 @@ exports.add_message_post = [
         })
       })
   }
-]
-
-//DateTime.now().toISO()
+];

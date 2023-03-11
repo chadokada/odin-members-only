@@ -1,25 +1,24 @@
 extends layout 
 
 block content
-
-  div.title-row
-    h1= title 
-    
   hr
   
-  div.messages-container
+  div.title-row
+    div.section-title #{title} 
     div.add-message
       if currentUser
         a(href='/add-message')
           button.btn-add-message Add Message
+
+  div.messages-container
     for message in messages 
       div.message-container
         div.message-title #{message.title}
         div.message-info 
-          if currentUser 
+          if currentUser && currentUser.membership_status 
             div.message-username #{message.user.username}
+            div.message-timestamp #{message.timestamp_formatted}
           else 
             div.message-username ?????
-   
-          div.message-timestamp #{message.timestamp_formatted}
+            div.message-timestamp ?/?/???? ?:?? AM/PM
         div.message-body #{message.message_body}

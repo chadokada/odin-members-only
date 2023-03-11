@@ -1,10 +1,8 @@
 extends layout 
 
 block content
-
-  h2= currentUser.username + ' Settings'
-
   hr
+  h2= currentUser.username + ' Settings'
 
   div.setting-field-container
     div.setting-field #[strong First Name:] #{currentUser.first_name}
@@ -16,8 +14,8 @@ block content
         div.not-member Not a Member 
           a(href='/become-a-member')
             button.btn-membership Become a Member!
-    div.setting-field #[strong Admin:] 
-      if currentUser.admin
+    div.setting-field #[strong Moderator:] 
+      if currentUser.moderator
         div Yes 
       else 
         div No 

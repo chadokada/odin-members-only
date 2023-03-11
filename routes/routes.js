@@ -35,6 +35,12 @@ router.get('/user/:username', user_controller.user_profile_page);
 // GET user settings page
 router.get('/settings', user_controller.user_setting_page);
 
+// GET moderator verification page
+router.get('/mod-verification', user_controller.moderator_verification_get);
+
+// POST moderator verification page
+router.post('/mod-verification', user_controller.moderator_verification_post);
+
 
 //
 // AUTHENTICATION ROUTES //

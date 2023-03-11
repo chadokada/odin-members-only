@@ -11,20 +11,21 @@ html(lang='en')
   body
     div(class='container-fluid')
       div(class='header-row')
-        if currentUser
-          a(href=currentUser.url) #{currentUser.username} 
-          a(href='/settings')
-            img.user-settings(src='/images/gear.png')
-        if currentUser
-          a(href='/log-out')
-            button.btn.btn-primary Log Out
-        else 
-          a(href='/sign-up')
-            button.btn.btn-primary Sign Up
-          a(href='/log-in')
-            button.btn.btn-primary Log In
+        a(href='/')
+          h1 Members Only
+        div.header-controls
+          if currentUser
+            a(href=currentUser.url) #{currentUser.username} 
+            a(href='/settings')
+              img.user-settings(src='/images/gear.png')
+          if currentUser
+            a(href='/log-out')
+              button.btn.btn-primary Log Out
+          else 
+            a(href='/sign-up')
+              button.btn.btn-primary Sign Up
+            a(href='/log-in')
+              button.btn.btn-primary Log In
 
-      div(class='row')
-
-        div(class='container-body')
-          block content
+      div(class='container-body')
+        block content
