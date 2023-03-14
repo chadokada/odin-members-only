@@ -13,5 +13,4 @@ exports.home = (req, res, next) => {
         messages: messages
       })
     })
-
 }

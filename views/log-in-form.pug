@@ -27,9 +27,9 @@ html(lang='en')
       div.form-group 
         label(for='password') Password: 
         input#password.form-control(type='password', placeholder='Password', name='password' )
-        if errors && errors.confirm_password
-          div.input-error-msg 
-            p #{errors.confirm_password}
+        div.input-error-msg 
+          if errors && errors.password
+            p #{errors.password}
 
 
 

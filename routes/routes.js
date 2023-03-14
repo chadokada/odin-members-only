@@ -64,4 +64,8 @@ router.get('/add-message', message_controller.add_message_get);
 
 router.post('/add-message', message_controller.add_message_post);
 
+router.get('/message/:id/delete', message_controller.delete_message_get);
+
+router.post('/message/:id/delete', message_controller.delete_message_post);
+
 module.exports = router;

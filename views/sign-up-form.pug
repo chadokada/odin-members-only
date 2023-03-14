@@ -9,53 +9,61 @@ html(lang='en')
     script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js", integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV", crossorigin="anonymous")
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    
+    div.sign-up-container
 
-    h1= title 
+      h1= title 
+      hr
+      form(method='POST' action='')
 
-    form(method='POST' action='')
-
-      div.form-group 
-        label(for='first_name') First Name: 
-        input#first_name.form-control(
-          type='text', placeholder='First Name', name='first_name', required='true',
-          value=(first_name==undefined? '' : first_name)
-        )
-
-      div.form-group 
-        label(for='last_name') Last Name: 
-        input#last_name.form-control(
-          type='text', placeholder='Last Name', name='last_name', required='true',
-          value=(last_name==undefined? '' : last_name)
-        )
-
-      div.form-group 
-        label(for='username') Username: 
-        input#username.form-control(
-          type='text', placeholder='Username', name='username', required='true'
-          value=(username==undefined? '' : username)
-        )
-        if errors && errors.username
+        div.form-group 
+          label(for='first_name') First Name: 
+          input#first_name.form-control(
+            type='text', placeholder='First Name', name='first_name', required='true',
+            value=(first_name==undefined? '' : first_name)
+          )
           div.input-error-msg 
-            p #{errors.username}
+            if errors && errors.first_name
+              p #{errors.username}
 
-      div.form-group 
-        label(for='password') Password: 
-        input#password.form-control(
-          type='password', placeholder='Password', name='password', required='true'
-        )
-        if errors && errors.confirm_password
+        div.form-group 
+          label(for='last_name') Last Name: 
+          input#last_name.form-control(
+            type='text', placeholder='Last Name', name='last_name', required='true',
+            value=(last_name==undefined? '' : last_name)
+          )
           div.input-error-msg 
-            p #{errors.confirm_password}
+            if errors && errors.last_name
+              p #{errors.username}
 
-      div.form-group 
-        label(for='confirm_password') Confirm Password: 
-        input#confirm_password.form-control(
-          type='password', placeholder='Confirm Password', name='confirm_password', required='true'
-        )
-        if errors && errors.confirm_password
+        div.form-group 
+          label(for='username') Username: 
+          input#username.form-control(
+            type='text', placeholder='Username', name='username', required='true'
+            value=(username==undefined? '' : username)
+          )
           div.input-error-msg 
-            p #{errors.confirm_password}
+            if errors && errors.username
+              p #{errors.username}
 
-      div.form-button-row
-        button.btn.btn-primary(type='submit') Submit
-        a.btn.btn-primary(href='/') Cancel
+        div.form-group 
+          label(for='password') Password: 
+          input#password.form-control(
+            type='password', placeholder='Password', name='password', required='true'
+          )
+          div.input-error-msg 
+            if errors && errors.confirm_password
+              p #{errors.confirm_password}
+
+        div.form-group 
+          label(for='confirm_password') Confirm Password: 
+          input#confirm_password.form-control(
+            type='password', placeholder='Confirm Password', name='confirm_password', required='true'
+          )
+          div.input-error-msg 
+            if errors && errors.confirm_password
+              p #{errors.confirm_password}
+
+        div.form-button-row
+          button.btn.btn-primary(type='submit') Submit
+          a.btn.btn-primary(href='/') Cancel

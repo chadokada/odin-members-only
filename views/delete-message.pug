@@ -1,0 +1,26 @@
+extends layout 
+
+block content 
+
+  hr
+
+  div.title-row
+    div.section-title #{title}
+
+  div.message-container
+    div.message-top-line
+      div.message-title #{message.title}
+    div.message-info
+      div.message-username #{message.user.username}
+      div.message-timestamp #{message.timestamp_formatted}
+    div.message-body #{message.message_body}
+  
+  div.delete-form-header Delete this message?
+
+  form.delete-message-form(method='POST' action='')
+    div.form-group
+      input#messageid.form-control(type='hidden',name='messageid', required='true', value=message._id )
+
+    div.form-button-row
+      button.btn.btn-primary.delete-message-form-btn(type='submit') Delete
+      a.btn.btn-primary.cancel-delete-form-btn(href='/') Cancel

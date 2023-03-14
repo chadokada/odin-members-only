@@ -1,9 +1,9 @@
 extends layout 
 
 block content
-
+  hr
   div.title-row
-    h1= title 
+    div.section-title #{title} 
 
   form.message-form(method='POST' action='')
 
@@ -13,6 +13,9 @@ block content
         type='text', placeholder='Message Title', name='message_title', required='true',
         value=(message_title==undefined? '' : message_title)
       )
+      div.input-error-msg 
+        if errors && errors.message_title
+          p #{errors.message_title}
 
     div.form-group 
       label(for='message_body') Message: 
@@ -20,6 +23,9 @@ block content
         type='textarea', placeholder='Message', name='message_body', required='true',
         value=(last_name==undefined? '' : last_name)
       )
+      div.input-error-msg 
+        if errors && errors.message_body
+          p #{errors.message_body}
 
     div.form-button-row
       button.btn.btn-primary(type='submit') Submit

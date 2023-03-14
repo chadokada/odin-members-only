@@ -2,7 +2,6 @@ extends layout
 
 block content
   hr
-  
   div.title-row
     div.section-title #{title} 
     div.add-message
@@ -13,10 +12,17 @@ block content
   div.messages-container
     for message in messages 
       div.message-container
-        div.message-title #{message.title}
+        div.message-top-line
+          div.message-title #{message.title}
+          if currentUser && currentUser.moderator
+            a(href='/message/'+message._id+'/delete')
+              button.btn-delete-message Delete
+
         div.message-info 
           if currentUser && currentUser.membership_status 
-            div.message-username #{message.user.username}
+            div.message-username 
+              a(href='/user/'+message.user.username) #{message.user.username}
+            
             div.message-timestamp #{message.timestamp_formatted}
           else 
             div.message-username ?????

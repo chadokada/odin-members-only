@@ -2,7 +2,8 @@ extends layout
 
 block content
   hr
-  h2= currentUser.username + ' Settings'
+  div.title-row
+    div.section-title #{currentUser.username + ' Settings'}
 
   div.setting-field-container
     div.setting-field #[strong First Name:] #{currentUser.first_name}

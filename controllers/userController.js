@@ -1,8 +1,10 @@
 require('dotenv').config();
+const async = require('async');
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const errorMsg = require('../utilities/errorMessages');
 const User = require('../models/user');
+const Message = require('../models/message');
 
 // Display Sign Up form on GET.
 exports.user_sign_up_get = (req, res) => {
@@ -33,6 +35,8 @@ exports.user_sign_up_post = [
     .escape(),
   body("confirm_password", 'Passwords must match.')
     .trim()
+    .isLength({min: 5})
+    .withMessage('Your password must be at least 5 characters')
     .custom((value, { req }) => value === req.body.password),
 
   (req, res, next) => {
@@ -48,26 +52,47 @@ exports.user_sign_up_post = [
       })
       return;
     }
-
-    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
-      if (err) {
-        return next(err);
-      }
-      const user = new User({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        username: req.body.username,
-        password: hashedPassword,
-        membership_status: false, // False by default, user has to register as member later
-        admin: false // False by default, admin status must be granted later
-      })
-      user.save((err) => {
-        if (err) {
+    
+    User.find({username: req.body.username})
+      .exec(function(err, found_user) {
+        if(err) {
+          console.log(err)
           return next(err)
-        }
-        res.redirect('/');
+        } else {
+          if (found_user.length === 0) {
+            // Username does not exist, so allow user to sign up
+            bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+              if (err) {
+                return next(err);
+              }
+              const user = new User({
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+                username: req.body.username,
+                password: hashedPassword,
+                membership_status: false, // False by default, user has to register as member later
+                admin: false // False by default, admin status must be granted later
+              })
+              user.save((err) => {
+                if (err) {
+                  return next(err)
+                }
+                res.redirect('/');
+              });
+            });
+          } else {
+            const errors = {username: "Username already exists. Please choose a new one"}
+            res.render('sign-up-form', {
+              title: 'Sign Up',
+              first_name: req.body.first_name,
+              last_name: req.body.last_name,
+              username: req.body.username,
+              errors: errors,
+            })
+            return;
+          };
+        };
       });
-    });
   }
 ]
 

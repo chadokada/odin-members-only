@@ -6,7 +6,7 @@ const MessageSchema = new Schema({
   title: {type: String, required: true, maxLength: 100},
   timestamp: {type: Date, required: true},
   user: {type: Schema.Types.ObjectId, ref: "User", required: true},
-  message_body: {type: String, required: true, maxLength: 500}
+  message_body: {type: String, required: true, maxLength: 5000}
 });
 
 // Virtual for Message's URL
