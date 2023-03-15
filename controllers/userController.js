@@ -147,10 +147,48 @@ exports.user_member_enroll_post = [
 ];
 
 exports.user_profile_page = (req, res, next) => {
-  // need to look up user in DB
-  res.render('user-profile', {
-    user: req.params.username
-  });
+  if(res.locals.currentUser) {
+    if(res.locals.currentUser.membership_status) {
+      async.waterfall(
+        [
+          function find_user(callback) {
+            User.find({ username: req.params.username})
+              .exec(function(err, user) {
+                if(err) {
+                  return next(err);
+                }
+                callback(null, user)
+              })
+          },
+          function get_message(user, callback) {
+            Message.find({user: user[0]._id})
+              .populate('user')
+              .exec(function(err, messages) {
+                if(err) {
+                  return next(err);
+                }
+                console.log(messages)
+                callback(null, messages)
+              })
+          }
+        ], (err, messages) => {
+          if (err){
+            return next(err)
+          };
+          res.render('user-profile', {
+            user: req.params.username,
+            messages: messages
+          });
+        }
+      );
+    } else {
+      res.redirect('/')
+    }
+  } else {
+    res.redirect('/');
+  };
+
+
 };
 
 // Display user setting page on GET
